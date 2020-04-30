@@ -29,9 +29,10 @@ RUN \
 	python3 \
 	unrar \
 	git \
-	wget && \
- apk update && \
- apk upgrade 
+	wget 
+	# && \
+ # apk update && \
+ # apk upgrade 
 	
 	
 # Medusa	
