@@ -44,9 +44,9 @@ RUN \
  mkdir -p \
 	/app/medusa && \
  curl -o \
-	/tmp/medusa.${MEDUSA_RELEASE}.tar.gz -L \
+	/tmp/medusa.tar.gz -L \
 	"https://github.com/pymedusa/Medusa/archive/${MEDUSA_RELEASE}.tar.gz" && \
- tar xf /tmp/medusa.${MEDUSA_RELEASE}.tar.gz -C \
+ tar xf /tmp/medusa.tar.gz -C \
 	/app/medusa --strip-components=1
 
 RUN \
