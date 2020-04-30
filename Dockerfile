@@ -50,7 +50,7 @@ RUN \
 	/app/medusa && \
  curl -o \
 	/tmp/medusa.tar.gz -L \
-	"https://github.com/pymedusa/Medusa/archive/v0.3.16.tar.gz" && \
+	"https://github.com/pymedusa/Medusa/archive/${MEDUSA_RELEASE+}.tar.gz" && \
  tar xf /tmp/medusa.tar.gz -C \
 	/app/medusa --strip-components=1
 #https://github.com/pymedusa/Medusa/archive/v0.3.16.tar.gz
