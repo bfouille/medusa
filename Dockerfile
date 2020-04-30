@@ -40,12 +40,8 @@ RUN \
  echo "**** install app ****" 
  #&& \
 RUN \
- # if [ -z ${MEDUSA_RELEASE+x} ]; then \
-	MEDUSA_RELEASE=$(curl -sX GET "https://api.github.com/repos/pymedusa/Medusa/releases/latest" \
-	| awk '/tag_name/{print $4;exit}' FS='[""]'); 
-	#\
- #fi && \
- RUN \
+MEDUSA_RELEASE=$(curl -sX GET "https://api.github.com/repos/pymedusa/Medusa/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]'); 
+RUN \
  mkdir -p \
 	/app/medusa && \
  curl -o \
