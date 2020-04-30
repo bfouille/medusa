@@ -10,9 +10,7 @@ LABEL maintainer="sparklyballs,aptalca"
 ENV LANG='en_US.UTF-8'
 
 RUN \
- echo ${MEDUSA_RELEASE} && \
- echo ${VERSION} && \
- echo ${BUILD_DATE}"
+ echo "${MEDUSA_RELEASE}"
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
