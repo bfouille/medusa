@@ -37,18 +37,23 @@ RUN \
 	
 # Medusa	
 RUN \
- echo "**** install app ****" && \
- if [ -z ${MEDUSA_RELEASE+x} ]; then \
+ echo "**** install app ****" 
+ #&& \
+RUN \
+ # if [ -z ${MEDUSA_RELEASE+x} ]; then \
 	MEDUSA_RELEASE=$(curl -sX GET "https://api.github.com/repos/pymedusa/Medusa/releases/latest" \
-	| awk '/tag_name/{print $4;exit}' FS='[""]'); \
- fi && \
+	| awk '/tag_name/{print $4;exit}' FS='[""]'); 
+	#\
+ #fi && \
+ RUN \
  mkdir -p \
 	/app/medusa && \
  curl -o \
 	/tmp/medusa.tar.gz -L \
-	"https://github.com/pymedusa/Medusa/releases/tag/${MEDUSA_RELEASE}.tar.gz" && \
+	"https://github.com/pymedusa/Medusa/archive/v0.3.16.tar.gz" && \
  tar xf /tmp/medusa.tar.gz -C \
 	/app/medusa --strip-components=1
+#https://github.com/pymedusa/Medusa/archive/v0.3.16.tar.gz
 
 RUN \
 # make directory
