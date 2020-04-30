@@ -10,12 +10,17 @@ LABEL maintainer="sparklyballs,aptalca"
 ENV LANG='en_US.UTF-8'
 
 RUN \
+ echo ${MEDUSA_RELEASE+x} && \
+ echo ${VERSION} && \
+ echo ${BUILD_DATE}"
+RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
 	curl \
 	mediainfo \
 	python3 \
-	unrar && \
+	unrar 
+RUN \
  echo "**** install app ****" && \
  if [ -z ${MEDUSA_RELEASE+x} ]; then \
 	MEDUSA_RELEASE=$(curl -sX GET "https://api.github.com/repos/pymedusa/Medusa/releases/latest" \
