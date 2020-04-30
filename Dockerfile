@@ -10,7 +10,7 @@ LABEL maintainer="sparklyballs,aptalca"
 ENV LANG='en_US.UTF-8'
 
 RUN \
- echo ${MEDUSA_RELEASE+x} && \
+ echo ${MEDUSA_RELEASE} && \
  echo ${VERSION} && \
  echo ${BUILD_DATE}"
 RUN \
