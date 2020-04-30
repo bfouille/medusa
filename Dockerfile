@@ -9,6 +9,11 @@ LABEL maintainer="sparklyballs,aptalca"
 
 ENV LANG='en_US.UTF-8'
 
+ENV SMA_PATH /usr/local/sma
+ENV SMA_RS Sonarr
+ENV SMA_UPDATE false
+
+
 RUN \
  echo -e "**** install app ****"
  
@@ -22,7 +27,8 @@ RUN \
 	curl \
 	mediainfo \
 	python3 \
-	unrar 
+	unrar \
+	python3-pip
 	
 	
 # Medusa	
@@ -35,37 +41,37 @@ RUN \
  mkdir -p \
 	/app/medusa && \
  curl -o \
-	/tmp/medusa.tar.gz -L \
+	/tmp/medusa.${MEDUSA_RELEASE}.tar.gz -L \
 	"https://github.com/pymedusa/Medusa/archive/${MEDUSA_RELEASE}.tar.gz" && \
- tar xf /tmp/medusa.tar.gz -C \
+ tar xf /tmp/medusa.${MEDUSA_RELEASE}.tar.gz -C \
 	/app/medusa --strip-components=1
 
-# CouchPotato
 RUN \
- echo "**** install app ****" && \
- mkdir -p \
-	/app/couchpotato && \
- if [ -z ${COUCHPOTATO_RELEASE+x} ]; then \
- 	COUCHPOTATO_RELEASE=$(curl -sX GET "https://api.github.com/repos/CouchPotato/CouchPotatoServer/commits/master" \
-        | awk '/sha/{print $4;exit}' FS='[""]'); \
- fi && \
- curl -o \
-	/tmp/couchpotato.tar.gz -L \
-	"https://github.com/CouchPotato/CouchPotatoServer/archive/${COUCHPOTATO_RELEASE}.tar.gz" && \
- tar xf /tmp/couchpotato.tar.gz -C \
-	/app/couchpotato --strip-components=1 && \
- echo "**** Cleanup ****" && \
- rm -Rf /tmp/*
-
+# make directory
+  mkdir ${SMA_PATH} && \
+# download repo
+  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git ${SMA_PATH} && \
+# install pip, venv, and set up a virtual self contained python environment
+  python3 -m pip install --user --upgrade pip && \
+  python3 -m pip install --user virtualenv && \
+  python3 -m virtualenv ${SMA_PATH}/venv && \
+  ${SMA_PATH}/venv/bin/pip install -r ${SMA_PATH}/setup/requirements.txt && \
+# ffmpeg
+  wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz -O /tmp/ffmpeg.tar.xz && \
+  tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1 && \
+  chgrp users /usr/local/bin/ffmpeg && \
+  chgrp users /usr/local/bin/ffprobe && \
+  chmod g+x /usr/local/bin/ffmpeg && \
+  chmod g+x /usr/local/bin/ffprobe
 
 
 # copy local files
 COPY root/ /
+COPY extras/ ${SMA_PATH}/
 
 # ports and volumes
-EXPOSE 5050
+
 EXPOSE 8081
 
-WORKDIR /app/couchpotato
-
+VOLUME /usr/local/sma/config
 VOLUME /config /downloads /tv
