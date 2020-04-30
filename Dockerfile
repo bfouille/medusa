@@ -27,8 +27,9 @@ RUN \
 	curl \
 	mediainfo \
 	python3 \
-	unrar \
-	python3-pip
+	unrar && \
+ apk update && \
+ apk upgrade 
 	
 	
 # Medusa	
@@ -50,12 +51,18 @@ RUN \
 # make directory
   mkdir ${SMA_PATH} && \
 # download repo
-  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git ${SMA_PATH} && \
+  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git ${SMA_PATH}
+  
+RUN \
 # install pip, venv, and set up a virtual self contained python environment
   python3 -m pip install --user --upgrade pip && \
   python3 -m pip install --user virtualenv && \
-  python3 -m virtualenv ${SMA_PATH}/venv && \
-  ${SMA_PATH}/venv/bin/pip install -r ${SMA_PATH}/setup/requirements.txt && \
+  python3 -m virtualenv ${SMA_PATH}/venv
+  
+RUN \
+  ${SMA_PATH}/venv/bin/pip install -r ${SMA_PATH}/setup/requirements.txt 
+  
+RUN \
 # ffmpeg
   wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz -O /tmp/ffmpeg.tar.xz && \
   tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1 && \
