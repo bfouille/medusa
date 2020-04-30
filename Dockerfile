@@ -41,10 +41,10 @@ RUN \
  #&& \
 RUN \
 MEDUSA_RELEASE=$(curl -sX GET "https://api.github.com/repos/pymedusa/Medusa/releases/latest" | awk '/tag_name/{print $4;exit}' FS='[""]'); 
+RUN \
 echo -e "$MEDUSA_RELEASE" 
 RUN \
- mkdir -p \
-	/app/medusa && \
+mkdir -p /app/medusa
 RUN \
 curl -o \
 	/tmp/medusa.tar.gz -L \
