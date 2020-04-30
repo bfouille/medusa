@@ -27,7 +27,9 @@ RUN \
 	curl \
 	mediainfo \
 	python3 \
-	unrar && \
+	unrar \
+	git \
+	wget && \
  apk update && \
  apk upgrade 
 	
