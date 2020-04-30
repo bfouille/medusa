@@ -12,6 +12,8 @@ ENV LANG='en_US.UTF-8'
 RUN \
  echo "${MEDUSA_RELEASE}"
 RUN \
+ echo "${MEDUSA_RELEASE+x}"
+RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
 	curl \
