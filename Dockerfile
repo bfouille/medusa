@@ -4,16 +4,13 @@ FROM lsiobase/alpine:3.11
 ARG BUILD_DATE
 ARG VERSION
 ARG MEDUSA_RELEASE
-
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="sparklyballs,aptalca"
+LABEL maintainer="bfo"
 
 ENV LANG='en_US.UTF-8'
-
 ENV SMA_PATH /usr/local/sma
 ENV SMA_RS Sonarr
 ENV SMA_UPDATE false
-
 
 RUN \
  echo "**** install packages ****" && \
@@ -21,15 +18,7 @@ RUN \
 	curl \
 	mediainfo \
 	python3 \
-	unrar \
-	git \
-	wget 
-	# && \
- # apk update && \
- # apk upgrade 
-	
-	
-# Medusa	
+	unrar 
 RUN \
  echo "**** install app ****" && \
  if [ -z ${MEDUSA_RELEASE+x} ]; then \
@@ -44,6 +33,11 @@ RUN \
  tar xf /tmp/medusa.tar.gz -C \
 	/app/medusa --strip-components=1
 
+RUN \
+ echo "**** install packages ****" && \
+ apk add --no-cache \
+	git \
+	wget 
 
 RUN \
 # make directory
