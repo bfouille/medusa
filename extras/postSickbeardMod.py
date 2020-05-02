@@ -45,7 +45,7 @@ try:
                 refresh = json.load(urllib.request.urlopen(sickbeard_url))
                 for item in refresh:
                     log.debug(refresh[item])
-		    log.info("Sickbeard refresh done.")
+                    log.info("Sickbeard refresh done.")
             except (IOError, ValueError):
                 log.exception("Couldn't refresh Sickbeard, check your autoProcess.ini settings.")
     else:
