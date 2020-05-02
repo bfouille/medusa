@@ -4,5 +4,3 @@
 chown -R abc:abc \
 	/app \
 	/config
-	/${SMA_PATH}
-chmod -R 775 ${SMA_PATH}/*.sh
